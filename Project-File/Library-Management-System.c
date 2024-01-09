@@ -1,31 +1,23 @@
 /*
   Project Name: Library Management System
-  Created By: GANESH MOURYA
-  
-  Github: https://github.com/Alkaison/Library-Management-System/
-  LinkedIn: https://linkedin.com/in/Alkaison
-  Twitter: https://twitter.com/Alkaison
+  Created By: Harsh Patel
 */
-// Pre-Defined Header Files
 #include<stdio.h>
 #include<conio.h>
 #include<string.h>
 #include<stdlib.h>
 #include<windows.h>
 
-// Define Constant KeyWords 
 #define ENTER 13
 #define TAB 9
 #define BKSP 8
 
-// System Operation Functions 
 void password(void);
 void menu(void);
 void userPanel(void);
 void bookPanel(void);
 void endScreen(void);
 
-// User Operation Functions 
 void addUser(void);
 void modifyUser(void);
 void listUser(void);
@@ -33,7 +25,6 @@ int searchUser(int);
 void rentList(void);
 void deleteUser(void);
 
-// Book Operation Functions 
 void addBook(void);
 int modifyBook(int);
 void listBook(void);
@@ -41,25 +32,20 @@ void rentBook(void);
 int searchBook(int);
 void deleteBook(void);
 
-// Main Function 
 void main(){
     password();
 }
 
-// System Functions 
     int passTerminator = 1;
     int bookStock = 0;
     char rentName[255], bookName[255];
-
-// If the user enters invaild password 3 times then the program gets terminated.
-// Password: Alkaison
 void password(){
 
     system("cls");
     fflush(stdin);
 
     char pwd[255];
-    char code[255] = {"Alkaison"};
+    char code[255] = {"harsh"};
     int i = 0;
 	char ch;
 
@@ -73,7 +59,7 @@ void password(){
 	while(1)
     {
 
-		ch = getch(); // get key
+		ch = getch();
 
 		if(ch == ENTER || ch == TAB)
         {
@@ -85,19 +71,18 @@ void password(){
 			if(i > 0)
             {
 				i--;
-				printf("\b \b"); // for backspace
+				printf("\b \b");
 			}
 		}
         else
         {
 			pwd[i++] = ch;
-			printf("* \b");	// to replace password character with * 
+			printf("* \b");
 		}
 	}
 
     fflush(stdin);
 
-    // verifies the password 
     if(strcmp(code, pwd) == 0)
     {
         printf("\nCorrect Password!");
@@ -113,7 +98,6 @@ void password(){
     }
 }
 
-// Main Selection menu between User & Book Panel 
 void menu(){
     
     system("cls");
@@ -442,7 +426,6 @@ void modifyUser(){
 
 }
 
-// Lists all the user records from user_Records.txt file 
 void listUser(){
     
     system("cls");
@@ -465,7 +448,6 @@ void listUser(){
 
         printf("-------------------------------\n");
         printf("> Full Name: %s \n", fname);
-        //printf("> Last Name: %s \n", lname); 
         printf("> Gender: %s \n", gender);
         printf("> Student-ID: %.0lf \n", sid);
         printf("> Phone No.: %.0lf \n", phone);
@@ -488,7 +470,6 @@ void listUser(){
     userPanel();
 }
 
-// this checks if the specified user exists in the records or not 
 int searchUser(int nameSearcher){
 
 label2:
@@ -510,7 +491,7 @@ label2:
 
      while(fscanf(pF, "%s %s %s %lf %lf \n", fname, lname, gender, &sid, &phone) != EOF)
     {
-        //strcmp(variable, variable1) -- if both the strings are equal then it will return 0 otherwise a random number.
+       
         compare = strcmp(find, fname);
 
         if(compare == 0)
@@ -558,7 +539,6 @@ label2:
     }
 }
 
-// deletes the user information from user_Records.txt file 
 void deleteUser(){
 
     system("cls");
@@ -633,9 +613,6 @@ void deleteUser(){
     Sleep(2000);
     userPanel();
 }
-
-// Book Functions 
-// add the books record in book_Records.txt file 
 void addBook(){
 
 label3:
@@ -702,7 +679,6 @@ label3:
     }
 }
 
-// edits the book details according to you and saves it again 
 int modifyBook(int rentModifier){
     
     system("cls");
@@ -814,7 +790,6 @@ int modifyBook(int rentModifier){
     }
 }
 
-// lists all the book record from the book_Records.txt file 
 void listBook(){
 
     system("cls");
@@ -856,11 +831,6 @@ void listBook(){
     bookPanel();
 }
 
-// Book Rental function
-// first it checks whether the user is already registered in the user_Records.txt or not 
-// second it checks whether the book exists in the book_Records.txt or not 
-// third it checks if the book quantity is atleast 1, throws error if the book is OUT OF STOCK -- it also reduces book quantity by 1 from book_Recprds.txt 
-// fourth it registers the user name & book name in a new file rent_Records.txt and saves it :) 
 void rentBook(){
 
     int terminator=1, nameFound, bookFound;
@@ -869,7 +839,6 @@ label5:
 
     fflush(stdin);
 
-    // check if user exists
     nameFound = searchUser(3);
 
     if(nameFound != 5 && terminator != 4)
@@ -890,7 +859,6 @@ label6:
 
     fflush(stdin);
 
-    // check if book exists
     bookFound = searchBook(3);
 
     if(bookFound != 5 && terminator != 4)
@@ -902,7 +870,6 @@ label6:
     }
     else if(bookFound == 5)
     {
-        // check if book quantity is > 0
         if(bookStock > 0)
         {
             printf("\nBook Found & In-Stock! \nPlease wait... \n");
@@ -918,16 +885,8 @@ label6:
 
     fflush(stdin);
 
-    /* printf("\n---------------------------------------------\n");
-    printf("User Searcher: %d \n", nameFound);
-    printf("Book Searcher: %d \n", bookFound);
-    printf("User Name: %s \n", rentName);
-    printf("Book Name: %s \n", bookName);
-    printf("---------------------------------------------\n\n"); */
-
     if(nameFound == 5 && bookFound == 5)
     {
-        // Adding record in rent_Records.txt file
         FILE *pF = fopen("rent_Records.txt", "ab+");
 
         if(pF != NULL)
@@ -941,7 +900,6 @@ label6:
 
         fclose(pF);
 
-        // reducing quantity of book by 1 
         bookStock--;
         modifyBook(5);
 
@@ -954,8 +912,6 @@ label6:
         bookPanel();
     }
 }
-
-// lists all the username & booknames which are rented to someone in registered files 
 void rentList(){
 
     system("cls");
